@@ -2,9 +2,17 @@ import random
 import asyncio
 from datetime import datetime
 
+# Condense will inject this during runtime
+try:
+    from condense import output
+except ImportError:
+    class DummyOutput:
+        async def send(self, x):
+            print(f"(DEV) Sent: {x}")
+    output = DummyOutput()
+
 vins = ['VIN001', 'VIN002', 'VIN003']
 
-# This is the required Condense entrypoint
 async def start():
     while True:
         for vin in vins:
